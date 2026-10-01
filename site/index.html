@@ -340,7 +340,7 @@ function draw() {
       else ctx.fillText(chr(G[i]), OX + x * CW, OY + y * CH);
     }
   }
-  if (FX.bloom > 0.01) {
+  if (FX.bloom > 0.01 && bloom.width > 1 && bloom.height > 1) {
     bctx.clearRect(0, 0, bloom.width, bloom.height);
     bctx.filter = 'blur(2px)';
     bctx.drawImage(cvs, 0, 0, bloom.width, bloom.height);
@@ -1427,6 +1427,8 @@ function frame(now) {
 }
 function step(now) {
   const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  if (window.innerWidth !== W || window.innerHeight !== H) { resize(); cur = -1; }
+  if (!COLS || !ROWS || !cvs.width || !cvs.height) return;
   const rt = now / 1000;
   if (playing) {
     lastT = T; T += dt;

@@ -5,7 +5,6 @@ export const lerp = (a, b, t) => a + (b - a) * t;
 /** Maps t from [from, to] onto [0, 1], clamped. */
 export const ramp = (t, from, to) => saturate((t - from) / (to - from));
 
-export const smooth = (t) => t * t * (3 - 2 * t);
 export const easeOut = (t) => 1 - (1 - t) ** 3;
 export const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
 

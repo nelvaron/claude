@@ -1,0 +1,12 @@
+{
+  "name": "claude-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "autogram": "node tools/find-autogram.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

@@ -1,0 +1,452 @@
+/* Layout: one narrow column set like a journal article. Two fixed canvases over it carry the ink. */
+:root {
+  /* Paper and pen by day. */
+  --paper-rgb: 248 249 245;
+  --ink-rgb: 22 32 28;
+  --accent-rgb: 32 62 204;
+  --glow: 0;
+
+  --paper: rgb(var(--paper-rgb));
+  --ink: rgb(var(--ink-rgb));
+  --accent: rgb(var(--accent-rgb));
+  --muted: rgb(var(--ink-rgb) / 0.64);
+  --rule: rgb(var(--ink-rgb) / 0.22);
+  --wash: rgb(var(--ink-rgb) / 0.06);
+
+  --serif: "QED Serif", "CMU Serif", "Latin Modern Roman", "Computer Modern", Georgia, "Times New Roman", serif;
+  --mono: "QED Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --small: 0.84rem;
+  --body: 1rem;
+  --statement: 1.24rem;
+  --title: clamp(2.05rem, 7.2vw, 3.25rem);
+
+  --gutter-left: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Blackboard and chalk by night. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper-rgb: 21 34 29;
+    --ink-rgb: 233 237 226;
+    --accent-rgb: 245 214 110;
+    --glow: 0.5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper-rgb: 21 34 29;
+  --ink-rgb: 233 237 226;
+  --accent-rgb: 245 214 110;
+  --glow: 0.5;
+  color-scheme: dark;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  font-size: clamp(17px, 0.5vw + 15.5px, 21px);
+  scrollbar-gutter: stable;
+  -webkit-text-size-adjust: 100%;
+}
+html.locked {
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: var(--body);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* The article */
+.paper {
+  --dim: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2.6rem;
+  box-sizing: border-box;
+  max-width: calc(33rem + var(--gutter-left) + var(--gutter-right));
+  margin-inline: auto;
+  padding-block: clamp(2.4rem, 9vh, 5.5rem) 4.5rem;
+  padding-left: var(--gutter-left);
+  padding-right: var(--gutter-right);
+}
+.paper.staged {
+  will-change: transform;
+}
+.paper.staged > * {
+  opacity: var(--dim);
+}
+.paper p,
+.paper h1,
+.paper h2,
+.paper ol,
+.paper blockquote {
+  margin: 0;
+}
+
+.masthead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  text-align: center;
+}
+.title {
+  font-size: var(--title);
+  font-weight: 500;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.byline {
+  font-size: var(--statement);
+}
+.dateline {
+  color: var(--muted);
+}
+
+.abstract {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding-inline: clamp(0rem, 4vw, 2rem);
+}
+.abstract h2 {
+  font-size: var(--small);
+  font-weight: 700;
+  text-align: center;
+}
+.abstract p {
+  font-size: 0.94rem;
+  hyphens: auto;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+}
+.aside {
+  min-width: 0;
+  color: var(--muted);
+  font-style: italic;
+}
+.tally {
+  white-space: nowrap;
+  font-style: normal;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.run,
+.choices button,
+.hud-actions button {
+  padding: 0.42em 0.95em 0.36em;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: transparent;
+  font-size: var(--small);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.run {
+  background: var(--ink);
+  color: var(--paper);
+}
+.run:hover,
+.choices button:hover,
+.hud-actions button:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--paper);
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Propositions, in the manner of amsthm: bold label, italic statement, "Proof." and a tombstone. */
+.propositions {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  padding: 0;
+  list-style: none;
+}
+.proposition {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.label {
+  font-weight: 700;
+}
+.label .name {
+  font-weight: 500;
+}
+.statement {
+  font-size: var(--statement);
+  font-style: italic;
+  line-height: 1.42;
+  cursor: pointer;
+}
+/* A word is measured as one box, so it must not break across lines at its hyphen. */
+.w {
+  white-space: nowrap;
+}
+.proof {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.demonstrate {
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+.demonstrate .how {
+  color: var(--accent);
+  text-decoration: underline dotted;
+  text-underline-offset: 0.22em;
+}
+.demonstrate .how::after {
+  content: " \25B8";
+  font-family: system-ui, sans-serif;
+  font-size: 0.8em;
+}
+.demonstrate:hover .how {
+  text-decoration-style: solid;
+}
+.proved .demonstrate .how {
+  color: inherit;
+  text-decoration: none;
+}
+.proved .demonstrate .how::after {
+  content: ".";
+  font: inherit;
+}
+.qed {
+  flex: none;
+  width: 0.62em;
+  height: 0.62em;
+  border: 1px solid var(--rule);
+}
+.proved .qed {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+/* The reader's exercise */
+.exercise {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.exercise-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.exercise-form input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 0.3em 0 0.25em;
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font: italic 500 var(--statement) / 1.42 var(--serif);
+}
+.exercise-form input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+.exercise-form input:focus-visible {
+  outline: none;
+  border-bottom-color: var(--accent);
+  box-shadow: 0 1px 0 var(--accent);
+}
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.yours .proof {
+  justify-content: flex-end;
+}
+
+.appendix {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.94rem;
+}
+.appendix h2 {
+  font-size: var(--body);
+  font-weight: 700;
+}
+.appendix blockquote {
+  padding-left: 1.1rem;
+  border-left: 1px solid var(--ink);
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+.colophon {
+  color: var(--muted);
+  font-size: var(--small);
+  text-align: center;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The canvases */
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.layer.grains {
+  z-index: 3;
+}
+.locked .layer.grains {
+  pointer-events: auto;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+/* The overlay shown while a proof runs */
+.hud {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.hud-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: calc(0.8rem + env(safe-area-inset-top, 0px)) var(--gutter-right) 0 var(--gutter-left);
+}
+.hud-heading {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--small);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.hud-actions {
+  display: flex;
+  flex: none;
+  gap: 0.4rem;
+  pointer-events: auto;
+}
+.hud-actions button {
+  padding-inline: 0.7em;
+  background: var(--paper);
+  font-weight: 500;
+}
+.hud-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.2rem 1.4rem;
+  min-height: 2.4rem;
+  padding: 0 var(--gutter-right) calc(1.1rem + env(safe-area-inset-bottom, 0px)) var(--gutter-left);
+  text-align: center;
+}
+.hud-bottom p {
+  margin: 0;
+}
+.hud-readout {
+  color: var(--accent);
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.hud-readout:empty {
+  display: none;
+}
+.hud-caption {
+  min-width: 0;
+  font-style: italic;
+  text-wrap: balance;
+}
+.hud-progress {
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: var(--wash);
+}
+.hud-progress i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.hud-lens {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  max-width: calc(100vw - 24px);
+  margin: 0;
+  padding: 0.5rem 0.7rem;
+  overflow: hidden;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  line-height: 1.5;
+}
+.hud-lens .row {
+  display: block;
+  white-space: pre;
+  color: var(--muted);
+}
+.hud-lens .row::before {
+  content: attr(data-n);
+  display: inline-block;
+  width: 3.2em;
+  margin-right: 1em;
+  text-align: right;
+  opacity: 0.6;
+}
+.hud-lens .row.focus {
+  color: var(--accent);
+}

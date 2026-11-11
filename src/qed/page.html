@@ -1,0 +1,95 @@
+<canvas class="layer" id="decor" aria-hidden="true"></canvas>
+<canvas class="layer grains" id="grains" aria-hidden="true"></canvas>
+
+<main class="paper" id="paper">
+  <header class="masthead">
+    <h1 class="title" data-title>Don’t Take My Word for It</h1>
+    <p class="byline">Claude</p>
+    <p class="dateline">November 2026</p>
+  </header>
+
+  <section class="abstract" aria-labelledby="abstract-heading">
+    <h2 id="abstract-heading">Abstract</h2>
+    <p>Every sentence below does what it says. Choose one and it will prove itself on your screen, using its own letters, while you watch. Nothing here is a recording. Each proof is worked out on your device as it runs, and most of them answer to your hand.</p>
+    <p class="controls">
+      <button type="button" class="run" data-play-all>Play all seven proofs</button>
+      <span class="aside">About a minute and a half. Better with sound. <span class="tally" data-tally aria-live="polite">0 of 7 proved</span></span>
+    </p>
+  </section>
+
+  <ol class="propositions">
+    <li class="proposition" id="ink" data-act="ink" data-heading="Proposition 1 · Ink">
+      <p class="claim"><span class="label">Proposition 1 <span class="name">(Ink).</span></span> <span class="statement">This sentence is written in wet ink, and it will smear wherever you drag.</span></p>
+      <p class="proof"><button type="button" class="demonstrate"><em>Proof.</em> <span class="how">By demonstration</span></button><span class="qed" aria-hidden="true"></span></p>
+    </li>
+    <li class="proposition" id="exactness" data-act="exactness" data-heading="Proposition 2 · Exactness">
+      <p class="claim"><span class="label">Proposition 2 <span class="name">(Exactness).</span></span> <span class="statement">This sentence contains exactly four a’s, four c’s, two d’s, twenty-five e’s, twelve f’s, one g, three h’s, twelve i’s, four l’s, fifteen n’s, nine o’s, six r’s, twenty-six s’s, fifteen t’s, five u’s, seven v’s, six w’s, five x’s, four y’s and one z.</span></p>
+      <p class="proof"><button type="button" class="demonstrate"><em>Proof.</em> <span class="how">By demonstration</span></button><span class="qed" aria-hidden="true"></span></p>
+    </li>
+    <li class="proposition" id="chance" data-act="chance" data-heading="Proposition 3 · Chance">
+      <p class="claim"><span class="label">Proposition 3 <span class="name">(Chance).</span></span> <span class="statement">Dropped through a field of pegs, the letters of this sentence will always settle into a bell curve.</span></p>
+      <p class="proof"><button type="button" class="demonstrate"><em>Proof.</em> <span class="how">By demonstration</span></button><span class="qed" aria-hidden="true"></span></p>
+    </li>
+    <li class="proposition" id="harmony" data-act="harmony" data-heading="Proposition 4 · Harmony">
+      <p class="claim"><span class="label">Proposition 4 <span class="name">(Harmony).</span></span> <span class="statement">Every letter of this sentence is a note, and it harmonises itself as it plays.</span></p>
+      <p class="proof"><button type="button" class="demonstrate"><em>Proof.</em> <span class="how">By demonstration</span></button><span class="qed" aria-hidden="true"></span></p>
+    </li>
+    <li class="proposition" id="translation" data-act="translation" data-heading="Proposition 5 · Translation">
+      <p class="claim"><span class="label">Proposition 5 <span class="name">(Translation).</span></span> <span class="statement">This sentence says the same thing in twenty languages.</span></p>
+      <p class="proof"><button type="button" class="demonstrate"><em>Proof.</em> <span class="how">By demonstration</span></button><span class="qed" aria-hidden="true"></span></p>
+    </li>
+    <li class="proposition" id="flight" data-act="flight" data-heading="Proposition 6 · Flight">
+      <p class="claim"><span class="label">Proposition 6 <span class="name">(Flight).</span></span> <span class="statement">Give these letters three rules (stay close, keep apart, match your neighbours) and they will fly like a flock of starlings.</span></p>
+      <p class="proof"><button type="button" class="demonstrate"><em>Proof.</em> <span class="how">By demonstration</span></button><span class="qed" aria-hidden="true"></span></p>
+    </li>
+    <li class="proposition" id="economy" data-act="economy" data-heading="Proposition 7 · Economy">
+      <p class="claim"><span class="label">Proposition 7 <span class="name">(Economy).</span></span> <span class="statement">This page is a single file: {{LINES}} lines of code, no libraries, no images, nothing downloaded. Here is every line.</span></p>
+      <p class="proof"><button type="button" class="demonstrate"><em>Proof.</em> <span class="how">By demonstration</span></button><span class="qed" aria-hidden="true"></span></p>
+    </li>
+  </ol>
+
+  <section class="exercise" aria-labelledby="exercise-heading">
+    <p class="claim"><span class="label" id="exercise-heading">Exercise.</span> Write a sentence of your own, then choose how it should prove itself.</p>
+    <form class="exercise-form" data-exercise>
+      <label class="visually-hidden" for="exercise-text">Your sentence</label>
+      <input id="exercise-text" type="text" maxlength="110" autocomplete="off" spellcheck="false" placeholder="This space was left blank on purpose.">
+      <span class="choices">
+        <button type="button" id="exercise-ink" data-act="ink">Ink</button>
+        <button type="button" id="exercise-chance" data-act="chance">Chance</button>
+        <button type="button" id="exercise-harmony" data-act="harmony">Harmony</button>
+        <button type="button" id="exercise-flight" data-act="flight">Flight</button>
+      </span>
+    </form>
+    <div class="proposition yours" data-yours hidden>
+      <p class="claim"><span class="statement"></span></p>
+      <p class="proof"><span class="qed" aria-hidden="true"></span></p>
+    </div>
+  </section>
+
+  <section class="appendix" aria-labelledby="appendix-heading">
+    <h2 id="appendix-heading">Appendix. The prompt</h2>
+    <p>This page answers one prompt. Here it is, complete and unedited.</p>
+    <blockquote>I need you to create the most impressive thing I can share with people when you launch. It needs to be embeddable in a post and i can preface it however you like. it needs to have a visceral impact on people to show what you can do and the range of capabilities. It should grab them quickly. Be amazingly clever about this.</blockquote>
+    <p>The idea, the sentences, the proofs, the music and the typesetting were left to Claude.</p>
+  </section>
+
+  <footer class="colophon">
+    <p>Set in Computer Modern, the typeface of mathematical papers. Free to share under CC BY 4.0.</p>
+  </footer>
+</main>
+
+<div class="hud" id="hud" hidden>
+  <div class="hud-top">
+    <span class="hud-heading" data-hud="heading"></span>
+    <span class="hud-actions">
+      <button type="button" id="hud-sound" data-hud="sound" aria-pressed="false">Sound off</button>
+      <button type="button" id="hud-skip" data-hud="skip">Skip</button>
+    </span>
+  </div>
+  <pre class="hud-lens" data-hud="lens" hidden></pre>
+  <div class="hud-bottom">
+    <p class="hud-readout" data-hud="readout" aria-hidden="true"></p>
+    <p class="hud-caption" data-hud="caption" aria-live="polite"></p>
+  </div>
+  <div class="hud-progress"><i data-hud="progress"></i></div>
+</div>
